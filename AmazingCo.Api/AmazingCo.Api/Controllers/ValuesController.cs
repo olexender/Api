@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AmazingCo.Api.Data;
+using AmazingCo.Api.Data.Cache;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazingCo.Api.Controllers
@@ -12,16 +13,20 @@ namespace AmazingCo.Api.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly ICompanyStructureCache _companyStructureCache;
         // GET api/values
 
-        public ValuesController(ICompanyRepository repository)
+        public ValuesController(ICompanyRepository companyRepository, ICompanyStructureCache companyStructureCache)
         {
-            _companyRepository = repository;
+            _companyRepository = companyRepository;
+            _companyStructureCache = companyStructureCache;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            var res = _companyStructureCache.Companies;
+            //var res1 = _companyRepository.GetChildrenNodes("A");
             return new string[] { "value1", "value2" };
         }
 

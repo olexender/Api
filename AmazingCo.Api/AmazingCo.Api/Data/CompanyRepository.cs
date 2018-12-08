@@ -17,16 +17,19 @@ namespace AmazingCo.Api.Data
 
         }
 
-        public async Task<Company> GetChildrenNodes()
-        {
-            return await GetAll()
-                .OrderByDescending(c => c.Name)
-                .FirstOrDefaultAsync();
-        }
-
-        public Task<string> GetChildrenNodes(string node)
+        public Task<IEnumerable<Company>> GetChildrenNodes()
         {
             throw new NotImplementedException();
+        }
+
+        public Company GetChildrenNodes(string node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public  IEnumerable<Company> GetAllNodes()
+        {
+            return  GetAll();
         }
     }
 }

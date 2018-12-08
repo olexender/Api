@@ -7,6 +7,7 @@ namespace AmazingCo.Api.Data
 {
     public interface ICompanyRepository
     {
-        Task<string> GetChildrenNodes(string node);
+        Company GetChildrenNodes(string node);
+        IEnumerable<Company> GetAllNodes();
     }
 }
