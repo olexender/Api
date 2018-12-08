@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AmazingCo.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazingCo.Api.Controllers
@@ -10,7 +11,14 @@ namespace AmazingCo.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly ICompanyRepository _companyRepository;
         // GET api/values
+
+        public ValuesController(ICompanyRepository repository)
+        {
+            _companyRepository = repository;
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
