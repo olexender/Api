@@ -1,0 +1,3 @@
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.csproj.CoreCompileInputs.cache
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.AssemblyInfoInputs.cache
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.AssemblyInfo.cs
