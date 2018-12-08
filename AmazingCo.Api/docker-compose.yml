@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  dockerwebapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    image: myregistry/dockerwebapp
+    build:
+      context: .
+      dockerfile: AmazingCo.Api/Dockerfile
