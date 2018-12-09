@@ -12,7 +12,8 @@ namespace AmazingCo.Api.Data
         [Required]
         public string Name { get; set; }
         //root node if null
-        public int? ParentId { get; set; }
+        public Guid ExternalId { get; set; }
+        public Guid? ParentId { get; set; }
         public int Height { get; set; }
     }
 }
