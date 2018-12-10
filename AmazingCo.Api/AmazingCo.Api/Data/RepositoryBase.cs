@@ -30,14 +30,13 @@ namespace AmazingCo.Api.Data
 
         public TEntity GetById(int id)
         {
-           var cons =  _dbContext.Database.GetDbConnection().ConnectionString;
             return  _dbContext.Set<TEntity>().FirstOrDefault(e => e.Id == id);
         }
 
-        public async Task Update(TEntity entity)
+        public void Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
         public async Task UpdateRange(IEnumerable<TEntity> entity)

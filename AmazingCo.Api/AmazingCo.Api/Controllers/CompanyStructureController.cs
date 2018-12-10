@@ -1,40 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using AmazingCo.Api.Data;
 using AmazingCo.Api.Data.Cache;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace AmazingCo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class CompanyStructureController : ControllerBase
     {
         private readonly ICompanyRepository _companyRepository;
 
         private readonly ICompanyStructureCache _companyStructureCache;
-        // GET api/values
 
-        public ValuesController(ICompanyRepository companyRepository, ICompanyStructureCache companyStructureCache)
+        public CompanyStructureController(ICompanyRepository companyRepository, ICompanyStructureCache companyStructureCache)
         {
             _companyRepository = companyRepository;
             _companyStructureCache = companyStructureCache;
         }
-
+        // GET api/companystructure
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             var res = _companyStructureCache.Companies;
-            //var res1 = _companyRepository.GetChildrenNodes("A");
+ 
             return res.Select(i => i.Name).ToArray();
         }
 
-        // GET api/values/5
+        // GET api/companystructure/5
         [HttpGet("{node}")]
         public ActionResult<IEnumerable<Company>> Get(string node)
         {
@@ -43,13 +38,12 @@ namespace AmazingCo.Api.Controllers
                 return NotFound("Not found");
             }
 
-            //_companyRepository.
             return _companyStructureCache.GetChildrens(node).ToList();
         }
 
-        // PUT api/values/5
+        // PUT api/companystructure/5
         [HttpPut("{node}")]
-        public IActionResult Put(string node, [FromBody] Company company)
+        public IActionResult Put(string node, [FromBody] CompanyApiEntity company)
         {
            if (company == null)
            {
@@ -57,7 +51,7 @@ namespace AmazingCo.Api.Controllers
            }
            
           var currentNode = _companyStructureCache.Companies.FirstOrDefault(i => i.Name == node);
-          var parentNode = _companyStructureCache.Companies.FirstOrDefault(i => i.ExternalId == company.ParentId);
+          var parentNode = _companyStructureCache.Companies.FirstOrDefault(i => i.Name == company.ParentName);
           if (currentNode == null || parentNode == null || node != company.Name)
           {
               return BadRequest();

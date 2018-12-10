@@ -14,6 +14,6 @@ namespace AmazingCo.Api.Data
 
     Task Create(TEntity entity);
 
-    Task Update(TEntity entity);
+    void Update(TEntity entity);
     }
 }

@@ -50,8 +50,7 @@ namespace AmazingCo.Api
                 {
                     var services = serviceScope.ServiceProvider;
                     serviceScope.ServiceProvider.GetService<CompanyStructureContext>().Database.EnsureCreated();
-                    SeedData.Initialize(services);
-                    //serviceScope.ServiceProvider.GetService<CompanyStructureContext>().Database.Migrate();
+                    SeedData.Initialize(services);                   
                 }
             }
             catch (Exception e)
