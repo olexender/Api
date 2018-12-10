@@ -17,19 +17,24 @@ namespace AmazingCo.Api.Data
 
         }
 
-        public Task<IEnumerable<Company>> GetChildrenNodes()
+        public Company GetNode(int nodeId)
         {
-            throw new NotImplementedException();
+            return GetById(nodeId);
         }
 
-        public Company GetChildrenNodes(string node)
+        public async void UpdateStructure(IEnumerable<Company> companies)
         {
-            throw new NotImplementedException();
+            await UpdateRange(companies);
         }
 
         public  IEnumerable<Company> GetAllNodes()
         {
             return  GetAll();
+        }
+
+        public async void UpdateNode(Company company)
+        {
+            await Update(company);
         }
     }
 }

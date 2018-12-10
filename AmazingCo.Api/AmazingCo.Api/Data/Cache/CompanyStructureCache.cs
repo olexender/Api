@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,8 @@ namespace AmazingCo.Api.Data.Cache
         private readonly ICompanyRepository _companiesRepository;
         private static object _lockAllCompanies = new object();
         private IEnumerable<Company> _allCompanies;
+        private static object _lockChildrens = new object();
+        private readonly Dictionary<string, List<Company>> _childrens = new Dictionary<string, List<Company>>();
 
         public CompanyStructureCache(ICompanyRepository companiesRepository)
         {
@@ -23,7 +26,7 @@ namespace AmazingCo.Api.Data.Cache
                 {
                     if (_allCompanies == null)
                     {
-                        _allCompanies = _companiesRepository.GetAllNodes();
+                        _allCompanies = _companiesRepository.GetAllNodes().ToList();
                     }
                 }
 
@@ -31,9 +34,47 @@ namespace AmazingCo.Api.Data.Cache
             }
         }
 
-        public IEnumerable<Company> GetParentsBy(Company communication, bool includeCurrrent)
+        public IEnumerable<Company> GetChildrens(string node)
         {
-            throw new System.NotImplementedException();
+            List<Company> result;
+            lock (_lockChildrens)
+            {
+                if (!_childrens.TryGetValue(node, out result))
+                {
+                    var currentNode = _allCompanies.FirstOrDefault(i => i.Name == node);
+                    result = GetNodeChildren(currentNode, Companies).ToList();
+                    _childrens[node] = result;
+                }
+            }
+
+            return result;
+        }
+
+        IEnumerable<Company> GetNodeChildren(Company node, IEnumerable<Company> nodes)
+        {
+            var children = nodes.Where(n => n.ParentId == node.ExternalId);
+
+            if (children.Any())
+            {
+                foreach (Company child in children)
+                {
+                    yield return child;
+
+                    var grandchildren = GetNodeChildren(child, nodes);
+                    foreach (Company grandchild in grandchildren)
+                    {
+                        yield return grandchild;
+                    }
+                }
+            }
+        }
+
+        public void Reset()
+        {
+            lock (_lockAllCompanies)
+            {
+                _allCompanies = null;
+            }
         }
     }
 }

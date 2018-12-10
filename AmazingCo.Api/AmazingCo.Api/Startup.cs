@@ -24,8 +24,8 @@ namespace AmazingCo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddSingleton<ICompanyStructureCache, CompanyStructureCache>();
-            services.AddDbContext<CompanyStructureContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Singleton);
+            services.AddScoped<ICompanyStructureCache, CompanyStructureCache>();
+            services.AddDbContext<CompanyStructureContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 
@@ -42,7 +42,7 @@ namespace AmazingCo.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(); 
 
             try
             {
@@ -51,7 +51,7 @@ namespace AmazingCo.Api
                     var services = serviceScope.ServiceProvider;
                     serviceScope.ServiceProvider.GetService<CompanyStructureContext>().Database.EnsureCreated();
                     SeedData.Initialize(services);
-                    // serviceScope.ServiceProvider.GetService<CompanyStructureContext>().Database.Migrate();
+                    //serviceScope.ServiceProvider.GetService<CompanyStructureContext>().Database.Migrate();
                 }
             }
             catch (Exception e)

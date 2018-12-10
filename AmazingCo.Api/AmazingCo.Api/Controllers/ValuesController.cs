@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AmazingCo.Api.Data;
 using AmazingCo.Api.Data.Cache;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace AmazingCo.Api.Controllers
 {
@@ -13,6 +16,7 @@ namespace AmazingCo.Api.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly ICompanyRepository _companyRepository;
+
         private readonly ICompanyStructureCache _companyStructureCache;
         // GET api/values
 
@@ -27,32 +31,49 @@ namespace AmazingCo.Api.Controllers
         {
             var res = _companyStructureCache.Companies;
             //var res1 = _companyRepository.GetChildrenNodes("A");
-            return new string[] { "value1", "value2" };
+            return res.Select(i => i.Name).ToArray();
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("{node}")]
+        public ActionResult<IEnumerable<Company>> Get(string node)
         {
-            return "value";
-        }
+            if (_companyStructureCache.Companies.FirstOrDefault(i => i.Name == node) == null)
+            {
+                return NotFound("Not found");
+            }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+            //_companyRepository.
+            return _companyStructureCache.GetChildrens(node).ToList();
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{node}")]
+        public IActionResult Put(string node, [FromBody] Company company)
         {
+           if (company == null)
+           {
+               return BadRequest();
+           }
+           
+          var currentNode = _companyStructureCache.Companies.FirstOrDefault(i => i.Name == node);
+          var parentNode = _companyStructureCache.Companies.FirstOrDefault(i => i.ExternalId == company.ParentId);
+          if (currentNode == null || parentNode == null || node != company.Name)
+          {
+              return BadRequest();
+          }
+          
+          UpdateNode(currentNode.Id, parentNode.ExternalId);
+          
+          return NoContent();
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        private void UpdateNode(int nodeId, Guid newParentId)
         {
+            var node = _companyRepository.GetNode(nodeId);
+            node.ParentId = newParentId;
+            _companyRepository.UpdateNode(node);
+            _companyStructureCache.Reset();
         }
     }
 }

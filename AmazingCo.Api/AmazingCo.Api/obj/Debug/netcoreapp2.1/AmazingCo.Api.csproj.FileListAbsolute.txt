@@ -1,3 +1,14 @@
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\bin\Debug\netcoreapp2.1\AmazingCo.Api.deps.json
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\bin\Debug\netcoreapp2.1\AmazingCo.Api.runtimeconfig.json
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\bin\Debug\netcoreapp2.1\AmazingCo.Api.runtimeconfig.dev.json
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\bin\Debug\netcoreapp2.1\AmazingCo.Api.dll
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\bin\Debug\netcoreapp2.1\AmazingCo.Api.pdb
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.csproj.CoreCompileInputs.cache
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.RazorAssemblyInfo.cache
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.RazorAssemblyInfo.cs
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.AssemblyInfoInputs.cache
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.AssemblyInfo.cs
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.RazorTargetAssemblyInfo.cache
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.dll
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.pdb

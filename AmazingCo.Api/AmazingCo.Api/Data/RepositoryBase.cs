@@ -23,19 +23,26 @@ namespace AmazingCo.Api.Data
             await _dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return   _dbContext.Set<TEntity>();
+            return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
         public TEntity GetById(int id)
         {
+           var cons =  _dbContext.Database.GetDbConnection().ConnectionString;
             return  _dbContext.Set<TEntity>().FirstOrDefault(e => e.Id == id);
         }
 
-        public async Task Update(int id, TEntity entity)
+        public async Task Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateRange(IEnumerable<TEntity> entity)
+        {
+            _dbContext.Set<TEntity>().UpdateRange(entity);
             await _dbContext.SaveChangesAsync();
         }
     }

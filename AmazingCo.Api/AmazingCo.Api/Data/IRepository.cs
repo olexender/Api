@@ -8,12 +8,12 @@ namespace AmazingCo.Api.Data
 {
     public interface IRepository<TEntity> where TEntity : class, IEntity
     {
-     IEnumerable<TEntity> GetAll();
+     IQueryable<TEntity> GetAll();
 
     TEntity GetById(int id);
 
     Task Create(TEntity entity);
 
-    Task Update(int id, TEntity entity);
+    Task Update(TEntity entity);
     }
 }
