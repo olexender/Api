@@ -22,7 +22,6 @@ namespace AmazingCo.Api.Tests
             return new CompanyStructureController(CompanyRepositoryMock.Object, CompanyStructureCacheMock.Object);
         }
 
-
         private readonly Guid? _rootParentId = null;
         private readonly Guid _rootExternalId = Guid.NewGuid();
         private readonly Guid _anodeExternalId = Guid.NewGuid();
@@ -45,38 +44,6 @@ namespace AmazingCo.Api.Tests
         {
             SetUpCompanyRepositoryMock();
             SetUpCompanyStructureCache();
-        }
-
-        private void SetUpCompanyStructureCache()
-        {
-            var companies = GetCompaniesTreeStructure();
-
-            CompanyStructureCacheMock.Setup(repository => repository.Companies).Returns(companies);
-        }
-
-        private void SetUpCompanyRepositoryMock()
-        {
-            var companies = GetCompaniesTreeStructure();
-
-            CompanyRepositoryMock.Setup(repository => repository.GetAllNodes()).Returns(companies);
-        }
-
-        private List<Company> GetCompaniesTreeStructure(bool withRoot = true)
-        {        
-            var bExternalId = Guid.NewGuid();
-            var companies = new List<Company>
-            {
-                new Company { Height = 1, Name = _anodeName, Id = _anodeId, ParentId = _rootExternalId, ExternalId = _anodeExternalId},
-                new Company { Height = 1, Name = _bnodeName, Id = _dnodeId, ParentId = _rootExternalId, ExternalId = bExternalId},
-                new Company { Height = 2, Name = _cnodeName, Id = _cnodeId, ParentId = _anodeExternalId, ExternalId = Guid.NewGuid()},
-                new Company { Height = 2, Name = _dnodeName, Id = _dnodeId, ParentId = bExternalId, ExternalId = Guid.NewGuid()}
-            };
-            if (withRoot)
-            {
-                companies.Add(new Company { Height = 0, Name = _rootName, Id = _rootId, ParentId = _rootParentId, ExternalId = _rootExternalId });
-            }
-
-            return companies;
         }
 
         [Test]
@@ -146,6 +113,38 @@ namespace AmazingCo.Api.Tests
             var companies = GetCompaniesTreeStructure(false);
 
             CompanyStructureCacheMock.Setup(repository => repository.GetChildrens(_rootName)).Returns(companies);
+        }
+
+        private void SetUpCompanyStructureCache()
+        {
+            var companies = GetCompaniesTreeStructure();
+
+            CompanyStructureCacheMock.Setup(repository => repository.Companies).Returns(companies);
+        }
+
+        private void SetUpCompanyRepositoryMock()
+        {
+            var companies = GetCompaniesTreeStructure();
+
+            CompanyRepositoryMock.Setup(repository => repository.GetAllNodes()).Returns(companies);
+        }
+
+        private List<Company> GetCompaniesTreeStructure(bool withRoot = true)
+        {
+            var bExternalId = Guid.NewGuid();
+            var companies = new List<Company>
+            {
+                new Company { Height = 1, Name = _anodeName, Id = _anodeId, ParentId = _rootExternalId, ExternalId = _anodeExternalId},
+                new Company { Height = 1, Name = _bnodeName, Id = _dnodeId, ParentId = _rootExternalId, ExternalId = bExternalId},
+                new Company { Height = 2, Name = _cnodeName, Id = _cnodeId, ParentId = _anodeExternalId, ExternalId = Guid.NewGuid()},
+                new Company { Height = 2, Name = _dnodeName, Id = _dnodeId, ParentId = bExternalId, ExternalId = Guid.NewGuid()}
+            };
+            if (withRoot)
+            {
+                companies.Add(new Company { Height = 0, Name = _rootName, Id = _rootId, ParentId = _rootParentId, ExternalId = _rootExternalId });
+            }
+
+            return companies;
         }
     }
 }
