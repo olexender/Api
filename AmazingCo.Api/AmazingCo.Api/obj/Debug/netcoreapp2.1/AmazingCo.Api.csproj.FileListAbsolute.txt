@@ -12,3 +12,4 @@ D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.Ass
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.RazorTargetAssemblyInfo.cache
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.dll
 D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.pdb
+D:\Git\Api\AmazingCo.Api\AmazingCo.Api\obj\Debug\netcoreapp2.1\AmazingCo.Api.csprojAssemblyReference.cache
